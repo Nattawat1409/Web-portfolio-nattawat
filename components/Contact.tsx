@@ -154,10 +154,12 @@ export function Contact() {
               />
             </Field>
 
-            {/* Honeypot: hidden from people, irresistible to bots */}
+            {/* Honeypot: hidden from people, irresistible to bots.
+                Deliberately NOT named "company"/"organization"/etc. — browser autofill recognises those names and
+                silently fills the hidden field for real visitors, which made their messages get dropped as spam. */}
             <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
-              <label htmlFor="company">Company</label>
-              <input id="company" name="company" tabIndex={-1} autoComplete="off" />
+              <label htmlFor="hp_gotcha">Leave this field empty</label>
+              <input id="hp_gotcha" name="_gotcha" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
             </div>
 
             <button

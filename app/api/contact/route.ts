@@ -37,8 +37,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  // Honeypot filled → pretend success so bots learn nothing.
-  if (str(body.company)) return NextResponse.json({ ok: true });
+  // Honeypot filled → pretend success so bots learn nothing (but leave a trace in the server log).
+  if (str(body._gotcha)) {
+    console.warn("[contact] Honeypot field was filled — submission dropped as spam");
+    return NextResponse.json({ ok: true });
+  }
 
   const name = str(body.name);
   const email = str(body.email);
